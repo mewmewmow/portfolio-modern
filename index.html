@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; }
+    nav { position: fixed; top: 0; width: 100%; background: rgba(10,10,10,0.95); padding: 20px 40px; display: flex; justify-content: space-between; z-index: 100; }
+    nav a { color: #e0e0e0; text-decoration: none; margin-left: 30px; transition: color 0.3s; }
+    nav a:hover { color: #00d4ff; }
+    .section { min-height: 100vh; padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+    h2 { font-size: 2.5rem; color: #00d4ff; margin-bottom: 40px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 15px; }
+    .skill { background: #1a1a2e; padding: 10px 20px; border-radius: 20px; border: 1px solid #00d4ff33; }
+    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+    .project { background: #1a1a2e; border-radius: 12px; overflow: hidden; border: 1px solid #222; transition: transform 0.3s; }
+    .project:hover { transform: translateY(-5px); }
+    .project-info { padding: 20px; }
+    .project h3 { color: #00d4ff; margin-bottom: 10px; }
+    .contact { text-align: center; }
+    .contact a { color: #00d4ff; font-size: 1.2rem; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav><strong>Portfolio</strong><div><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div></nav>
+  <div class="section" id="about"><h2>About Me</h2><p style="font-size:1.2rem;line-height:1.8">Full-stack developer passionate about building amazing products. I love working with modern technologies and creating solutions that make a difference.</p></div>
+  <div class="section" id="skills"><h2>Skills</h2><div class="skills"><span class="skill">JavaScript</span><span class="skill">TypeScript</span><span class="skill">React</span><span class="skill">Next.js</span><span class="skill">Node.js</span><span class="skill">Python</span><span class="skill">FastAPI</span><span class="skill">PostgreSQL</span><span class="skill">Docker</span><span class="skill">AWS</span><span class="skill">Git</span><span class="skill">CI/CD</span></div></div>
+  <div class="section" id="projects"><h2>Projects</h2><div class="projects"><div class="project"><div class="project-info"><h3>AI Chat App</h3><p>Real-time chat with AI integration</p></div></div><div class="project"><div class="project-info"><h3>E-Commerce Platform</h3><p>Full-stack shopping experience</p></div></div><div class="project"><div class="project-info"><h3>Task Manager</h3><p>Productivity app with team features</p></div></div></div></div>
+  <div class="section contact" id="contact"><h2>Contact</h2><p style="margin-bottom:20px">Let's build something amazing together!</p><a href="mailto:hello@example.com">hello@example.com</a></div>
+</body>
+</html>
