@@ -1,33 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Developer Portfolio</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; }
-    nav { position: fixed; top: 0; width: 100%; background: rgba(10,10,10,0.95); padding: 20px 40px; display: flex; justify-content: space-between; z-index: 100; }
-    nav a { color: #e0e0e0; text-decoration: none; margin-left: 30px; transition: color 0.3s; }
-    nav a:hover { color: #00d4ff; }
-    .section { min-height: 100vh; padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
-    h2 { font-size: 2.5rem; color: #00d4ff; margin-bottom: 40px; }
-    .skills { display: flex; flex-wrap: wrap; gap: 15px; }
-    .skill { background: #1a1a2e; padding: 10px 20px; border-radius: 20px; border: 1px solid #00d4ff33; }
-    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-    .project { background: #1a1a2e; border-radius: 12px; overflow: hidden; border: 1px solid #222; transition: transform 0.3s; }
-    .project:hover { transform: translateY(-5px); }
-    .project-info { padding: 20px; }
-    .project h3 { color: #00d4ff; margin-bottom: 10px; }
-    .contact { text-align: center; }
-    .contact a { color: #00d4ff; font-size: 1.2rem; text-decoration: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isaac G. Balintay | Developer Portfolio</title>
+<meta name="description" content="Isaac G. Balintay — Beginner developer building web tools and learning by doing.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== DESIGN SYSTEM ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0f0f0f;--panel:#1a1a1a;--border:#2a2a2a;
+--text:#eaeaea;--dim:#888;--accent:#00ff9f;
+--glow:rgba(0,255,159,.2);--font:'JetBrains Mono',monospace;
+--radius:8px;
+}
+html{font-family:var(--font);background:var(--bg);color:var(--text);font-size:15px;scroll-behavior:smooth}
+body{line-height:1.6}
+
+/* ===== SCANLINE ===== */
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,159,.012) 3px,rgba(0,255,159,.012) 6px);pointer-events:none;z-index:9999}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,15,15,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+nav .wrap{max-width:880px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 24px}
+.nav-brand{font-weight:700;font-size:.85rem;color:var(--accent);text-decoration:none}
+.nav-links{display:flex;gap:22px}
+.nav-links a{font-size:.75rem;color:var(--dim);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-ver{font-size:.62rem;padding:2px 7px;border-radius:4px;background:rgba(0,255,159,.08);border:1px solid rgba(0,255,159,.2);color:var(--accent)}
+
+/* ===== LAYOUT ===== */
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+section{padding:90px 0}
+.tag{font-size:.65rem;color:var(--accent);text-transform:uppercase;letter-spacing:3px;margin-bottom:5px}
+.title{font-size:1.4rem;font-weight:700;margin-bottom:3px}
+.subtitle{font-size:.78rem;color:var(--dim);margin-bottom:16px;line-height:1.6}
+.line{width:28px;height:2px;background:var(--accent);margin-bottom:20px}
+
+/* ===== HERO ===== */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:52px}
+.hero-term{background:#0a0a0a;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px var(--border),0 20px 60px rgba(0,0,0,.45);max-width:680px}
+.term-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#181818;border-bottom:1px solid var(--border)}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+.term-body{padding:24px;font-size:.88rem;line-height:2}
+.prompt{color:var(--accent)}
+.cursor{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:middle;animation:blink 1s step-end infinite;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-name{font-size:1.4rem;font-weight:700;margin:10px 0 6px}
+.typed{min-height:1.7em;font-size:.85rem}
+.hero-sub{font-size:.72rem;color:var(--dim);margin-top:10px}
+
+/* ===== PANEL ===== */
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:border-color .3s,box-shadow .3s}
+.panel:hover{border-color:rgba(0,255,159,.25);box-shadow:0 0 16px var(--glow)}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-size:.75rem;font-weight:500;padding:8px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg);color:var(--text);text-decoration:none;cursor:pointer;transition:all .2s}
+.btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 10px var(--glow)}
+.btn-live{color:var(--accent);border-color:rgba(0,255,159,.25)}
+.btn-live:hover{background:rgba(0,255,159,.08)}
+.btn-gh{color:var(--text)}
+.btn-gh:hover{color:var(--accent);border-color:var(--accent)}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ===== PROJECT CARDS ===== */
+.proj{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all .3s;margin-bottom:14px}
+.proj:hover{border-color:var(--accent);box-shadow:0 0 18px var(--glow);transform:translateY(-2px)}
+.proj-name{font-size:.92rem;font-weight:600;margin-bottom:5px}
+.proj-desc{font-size:.75rem;color:var(--dim);line-height:1.5;margin-bottom:14px}
+.proj-tech{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.proj-tech span{font-size:.65rem;padding:3px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--dim)}
+
+/* ===== STATS ===== */
+.stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;flex:1;min-width:110px;text-align:center}
+.stat-val{font-size:1.4rem;font-weight:700;color:var(--accent)}
+.stat-lbl{font-size:.65rem;color:var(--dim);margin-top:2px}
+
+/* ===== SKILLS TERMINAL ===== */
+.skills-term{background:#0a0a0a;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;max-width:500px}
+.skills-bar{display:flex;align-items:center;gap:6px;padding:9px 14px;background:#181818;border-bottom:1px solid var(--border)}
+.skills-body{padding:18px 20px;font-size:.78rem;line-height:2.2}
+.skill::before{content:'>';color:var(--accent);margin-right:8px}
+.skill{color:var(--dim)}.skill strong{color:var(--text);font-weight:500}
+
+/* ===== CONTACT ===== */
+.contact-item{display:flex;align-items:center;gap:10px;color:var(--dim);text-decoration:none;transition:color .2s;margin-bottom:12px;font-size:.8rem}
+.contact-item:hover{color:var(--accent)}
+.contact-icon{width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:var(--panel);border:1px solid var(--border);border-radius:6px;font-size:.85rem}
+
+/* ===== ABOUT TEXT ===== */
+.about-text{font-size:.8rem;color:var(--dim);line-height:1.8;max-width:600px}
+.about-text strong{color:var(--text);font-weight:600}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:20px;right:20px;z-index:999;background:var(--panel);border:1px solid var(--accent);border-radius:var(--radius);padding:10px 18px;font-size:.78rem;color:var(--accent);box-shadow:0 0 16px var(--glow);transform:translateY(80px);opacity:0;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ===== FOOTER ===== */
+footer{text-align:center;padding:48px 0;border-top:1px solid var(--border);font-size:.72rem;color:var(--dim);line-height:2}
+footer a{color:var(--accent);text-decoration:none}
+
+/* ===== RESPONSIVE ===== */
+.menu-btn{display:none;position:fixed;top:10px;right:10px;z-index:200;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:7px 11px;color:var(--accent);cursor:pointer;font-family:var(--font);font-size:.78rem}
+.menu-btn:hover{background:rgba(0,255,159,.08)}
+@media(max-width:768px){
+section{padding:60px 0}
+.hero-name{font-size:1.1rem}
+.term-body{padding:16px;font-size:.78rem}
+.wrap{padding:0 16px}
+.nav-links{display:none}
+.nav-links.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:rgba(15,15,15,.96);border-bottom:1px solid var(--border);padding:16px 24px}
+.stats{flex-direction:column}
+.proj .btn-group{flex-direction:column}
+}
+</style>
 </head>
 <body>
-  <nav><strong>Portfolio</strong><div><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div></nav>
-  <div class="section" id="about"><h2>About Me</h2><p style="font-size:1.2rem;line-height:1.8">Full-stack developer passionate about building amazing products. I love working with modern technologies and creating solutions that make a difference.</p></div>
-  <div class="section" id="skills"><h2>Skills</h2><div class="skills"><span class="skill">JavaScript</span><span class="skill">TypeScript</span><span class="skill">React</span><span class="skill">Next.js</span><span class="skill">Node.js</span><span class="skill">Python</span><span class="skill">FastAPI</span><span class="skill">PostgreSQL</span><span class="skill">Docker</span><span class="skill">AWS</span><span class="skill">Git</span><span class="skill">CI/CD</span></div></div>
-  <div class="section" id="projects"><h2>Projects</h2><div class="projects"><div class="project"><div class="project-info"><h3>AI Chat App</h3><p>Real-time chat with AI integration</p></div></div><div class="project"><div class="project-info"><h3>E-Commerce Platform</h3><p>Full-stack shopping experience</p></div></div><div class="project"><div class="project-info"><h3>Task Manager</h3><p>Productivity app with team features</p></div></div></div></div>
-  <div class="section contact" id="contact"><h2>Contact</h2><p style="margin-bottom:20px">Let's build something amazing together!</p><a href="mailto:hello@example.com">hello@example.com</a></div>
+
+<!-- NAV -->
+<nav>
+<div class="wrap">
+<a href="#hero" class="nav-brand">~/isaac</a>
+<div class="nav-links" id="navLinks">
+<a href="#about">about</a>
+<a href="#projects">projects</a>
+<a href="#skills">skills</a>
+<a href="#contact">contact</a>
+</div>
+<span class="nav-ver">v1.0.0</span>
+</div>
+</nav>
+<button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+
+<!-- HERO -->
+<section id="hero">
+<div class="wrap">
+<div class="hero-term">
+<div class="term-bar">
+<span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+<span style="font-size:.68rem;color:var(--dim);margin-left:6px">~/portfolio</span>
+</div>
+<div class="term-body">
+<div><span class="prompt">isaac@dev</span> <span style="color:var(--dim)">~</span> <span class="accent" style="color:var(--accent)">$</span> cat intro.txt</div>
+<div style="color:var(--dim);margin:6px 0">---</div>
+<div class="hero-name">Hello, I'm <span style="color:var(--accent)">Isaac</span></div>
+<div class="typed"><span id="typed"></span><span class="cursor"></span></div>
+<div style="color:var(--dim);margin:10px 0 6px">---</div>
+<div class="hero-sub"># Learning to build, one project at a time</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+<div class="wrap">
+<div class="tag fade">01 //</div>
+<h2 class="title fade">About Me</h2>
+<div class="line fade"></div>
+<div class="panel fade">
+<p class="about-text">
+I'm learning <strong>full-stack development</strong> by building small projects and improving step by step.
+I enjoy creating useful web tools — from password generators to data formatters — and I'm currently
+exploring <strong>JavaScript</strong>, <strong>HTML/CSS</strong>, and <strong>version control with Git</strong>.
+</p>
+<br>
+<p class="about-text">
+I'm not claiming to be an expert. I'm a <strong>learner who builds</strong>, and I'm getting better every
+day by breaking things, fixing them, and learning from the process.
+</p>
+</div>
+</div>
+</section>
+
+<!-- STATS -->
+<section style="padding:0 0 60px">
+<div class="wrap">
+<div class="stats fade">
+<div class="stat"><div class="stat-val">4</div><div class="stat-lbl">Projects</div></div>
+<div class="stat"><div class="stat-val" id="clicks">0</div><div class="stat-lbl">Interactions</div></div>
+<div class="stat"><div class="stat-val">v1.0.0</div><div class="stat-lbl">Version</div></div>
+<div class="stat"><div class="stat-val">2026</div><div class="stat-lbl">Started</div></div>
+</div>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<div class="wrap">
+<div class="tag fade">02 //</div>
+<h2 class="title fade">Projects</h2>
+<div class="subtitle fade">Small tools I built while learning to code.</div>
+<div class="line fade"></div>
+
+<div class="proj fade">
+<div class="proj-name">🔐 Password Generator</div>
+<div class="proj-desc">Generates secure passwords with customizable options like length, symbols, and numbers.</div>
+<div class="proj-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+<div class="btn-group">
+<a href="https://mewmewmow.github.io/password-generator/" target="_blank" class="btn btn-live" onclick="track('demo_pw')">▶ Live Demo</a>
+<a href="https://github.com/mewmewmow/password-generator" target="_blank" class="btn btn-gh" onclick="track('gh_pw')">🐙 GitHub</a>
+</div>
+</div>
+
+<div class="proj fade">
+<div class="proj-name">⏱️ Countdown Timer</div>
+<div class="proj-desc">Tracks time events with a simple countdown interface. Set a target date and watch it count down.</div>
+<div class="proj-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+<div class="btn-group">
+<a href="https://mewmewmow.github.io/countdown-timer/" target="_blank" class="btn btn-live" onclick="track('demo_cd')">▶ Live Demo</a>
+<a href="https://github.com/mewmewmow/countdown-timer" target="_blank" class="btn btn-gh" onclick="track('gh_cd')">🐙 GitHub</a>
+</div>
+</div>
+
+<div class="proj fade">
+<div class="proj-name">📝 JSON Formatter</div>
+<div class="proj-desc">Formats and cleans JSON data for better readability. Paste raw JSON and get a clean, indented output.</div>
+<div class="proj-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+<div class="btn-group">
+<a href="https://mewmewmow.github.io/json-formatter/" target="_blank" class="btn btn-live" onclick="track('demo_jf')">▶ Live Demo</a>
+<a href="https://github.com/mewmewmow/json-formatter" target="_blank" class="btn btn-gh" onclick="track('gh_jf')">🐙 GitHub</a>
+</div>
+</div>
+
+<div class="proj fade">
+<div class="proj-name">🌐 SaaS Dashboard</div>
+<div class="proj-desc">A unified dashboard combining all my tools into one app. Built to learn how larger applications are structured.</div>
+<div class="proj-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+<div class="btn-group">
+<a href="https://mewmewmow.github.io/Portfolio/" target="_blank" class="btn btn-live" onclick="track('demo_saas')">▶ Live Demo</a>
+<a href="https://github.com/mewmewmow/Portfolio" target="_blank" class="btn btn-gh" onclick="track('gh_saas')">🐙 GitHub</a>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+<div class="wrap">
+<div class="tag fade">03 //</div>
+<h2 class="title fade">Skills</h2>
+<div class="line fade"></div>
+<div class="skills-term fade">
+<div class="skills-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span style="font-size:.68rem;color:var(--dim);margin-left:6px">skills.log</span></div>
+<div class="skills-body">
+<div style="color:var(--dim);margin-bottom:6px">isaac@skills ~ $ cat currently_learning.txt</div>
+<div class="skill"><strong>HTML & CSS</strong></div>
+<div class="skill"><strong>JavaScript</strong> fundamentals</div>
+<div class="skill"><strong>Git & GitHub</strong> basics</div>
+<div class="skill"><strong>Responsive design</strong></div>
+<div class="skill"><strong>Building web tools</strong></div>
+<div class="skill"><strong>Basic debugging</strong></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<div class="wrap">
+<div class="tag fade">04 //</div>
+<h2 class="title fade">Contact</h2>
+<div class="line fade"></div>
+<div class="skills-term fade" style="max-width:480px">
+<div class="skills-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span style="font-size:.68rem;color:var(--dim);margin-left:6px">contact.sh</span></div>
+<div class="skills-body">
+<div style="color:var(--dim);margin-bottom:10px">isaac@contact ~ $ echo $CONTACT</div>
+<a href="mailto:caasiyatnilab@gmail.com" class="contact-item" onclick="track('email')">
+<span class="contact-icon">📧</span>
+<span>caasiyatnilab@gmail.com</span>
+</a>
+<a href="https://github.com/mewmewmow" target="_blank" class="contact-item" onclick="track('github')">
+<span class="contact-icon">🐙</span>
+<span>github.com/mewmewmow</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="wrap">
+Built with <span style="color:var(--accent)">code</span> and <span style="color:var(--accent)">curiosity</span>
+<br><span style="font-size:.62rem">Isaac G. Balintay · 2026 · still learning, still building</span>
+</div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- JAVASCRIPT -->
+<script>
+// ===== ANALYTICS =====
+const a={c:0};
+try{const s=JSON.parse(localStorage.getItem('pf'));a.c=s.c||0;$('clicks').textContent=a.c}catch(e){}
+function track(n){a.c++;$('clicks').textContent=a.c;localStorage.setItem('pf',JSON.stringify(a));console.log('[analytics]',n,new Date().toLocaleTimeString())}
+function $(id){return document.getElementById(id)}
+
+// ===== TYPING =====
+const msgs=["I'm currently learning to build web tools and automation.","I build small projects to improve my skills.","Learning by doing — one commit at a time."];
+let mi=0,ci=0,del=false;
+(function t(){
+const m=msgs[mi],el=$('typed');
+if(!del){el.textContent=m.slice(0,ci+1);ci++;if(ci===m.length){del=true;setTimeout(t,2200);return}setTimeout(t,50)}
+else{el.textContent=m.slice(0,ci-1);ci--;if(ci===0){del=false;mi=(mi+1)%msgs.length;setTimeout(t,400);return}setTimeout(t,25)}
+})();
+
+// ===== FADE IN =====
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade').forEach(el=>{
+el.style.opacity='0';el.style.transform='translateY(18px)';el.style.transition='opacity .6s ease,transform .6s ease';
+obs.observe(el);
+});
+const style=document.createElement('style');
+style.textContent='.fade.visible{opacity:1!important;transform:translateY(0)!important}';
+document.head.appendChild(style);
+</script>
 </body>
 </html>
