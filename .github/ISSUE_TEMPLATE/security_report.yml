@@ -1,0 +1,45 @@
+name: 🔒 Security Vulnerability
+description: Report a security issue (private)
+title: "[SECURITY] "
+labels: ["security", "priority: critical"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ⚠️ **This issue will be kept private.** Please do not disclose details publicly.
+
+  - type: textarea
+    id: vulnerability
+    attributes:
+      label: Vulnerability Description
+      description: Describe the security issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: What's the potential impact?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction Steps
+      description: How can this be exploited?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true

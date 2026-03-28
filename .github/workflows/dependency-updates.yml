@@ -1,0 +1,43 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Monday 9 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  security-events: write
+
+jobs:
+  dependabot:
+    name: 🔄 Dependency Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check outdated packages
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install pip-audit
+            pip-audit --desc || echo "⚠️ Vulnerabilities found"
+          fi
+      - name: Check for npm updates
+        run: |
+          if [ -f package.json ]; then
+            npm outdated || true
+          fi
+
+  automerge:
+    name: 🤖 Auto-merge Dependabot
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          target: minor
+          github-token: ${{ secrets.DEPENDABOT_TOKEN || secrets.GITHUB_TOKEN }}

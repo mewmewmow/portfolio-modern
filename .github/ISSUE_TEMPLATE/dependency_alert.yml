@@ -1,0 +1,12 @@
+name: "\U0001F4E6 Dependency Update Alert"
+about: Automated dependency vulnerability or update notice
+title: "[DEPS] "
+labels: ["dependencies", "automated"]
+body:
+  - type: textarea
+    id: details
+    attributes:
+      label: Dependency Details
+      description: Package name, current version, available update, CVE if applicable
+    validations:
+      required: true

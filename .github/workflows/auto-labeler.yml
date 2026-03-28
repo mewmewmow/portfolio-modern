@@ -1,0 +1,84 @@
+name: Issue & PR Auto-Labeler
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  label-issues:
+    name: 🏷️ Auto-Label Issues
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues'
+    steps:
+      - uses: actions/labeler@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Auto-triage by content
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title.toLowerCase();
+            const body = (issue.body || '').toLowerCase();
+            const labels = [];
+
+            // Auto-detect bug
+            if (title.includes('bug') || title.includes('error') || title.includes('crash') || body.includes('error') || body.includes('stack trace')) {
+              labels.push('bug');
+            }
+            // Auto-detect feature
+            if (title.includes('feature') || title.includes('request') || title.includes('add') || title.includes('implement')) {
+              labels.push('enhancement');
+            }
+            // Auto-detect security
+            if (title.includes('security') || title.includes('vulnerability') || title.includes('cve') || body.includes('security')) {
+              labels.push('security');
+              labels.push('priority: high');
+            }
+            // Auto-detect documentation
+            if (title.includes('docs') || title.includes('readme') || title.includes('documentation')) {
+              labels.push('documentation');
+            }
+            // Auto-detect question
+            if (title.includes('how') || title.includes('question') || title.includes('?')) {
+              labels.push('question');
+            }
+            // Priority detection
+            if (title.includes('urgent') || title.includes('critical') || title.includes('asap')) {
+              labels.push('priority: critical');
+            }
+
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labels
+              });
+              console.log(`Applied labels: ${labels.join(', ')}`);
+            }
+
+  label-prs:
+    name: 🏷️ Auto-Label PRs
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/labeler@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Size labels
+        uses: codelytv/pr-size-labeler@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          xs_max_size: 10
+          s_max_size: 100
+          m_max_size: 500
+          l_max_size: 1000
+          fail_if_xl: false
